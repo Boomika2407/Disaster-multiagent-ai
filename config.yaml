@@ -1,0 +1,101 @@
+# ============================================================
+# disaster-multiagent-ai — Central Configuration
+# ============================================================
+
+# --- Data Paths ---
+data:
+  raw:
+    floodnet: E:/disaster-data/raw/floodnet
+    xbd: E:/disaster-data/raw/xbd/train/train
+  processed:
+    floodnet: E:/disaster-data/processed/floodnet
+    xbd: E:/disaster-data/processed/xbd
+
+# --- Image Preprocessing ---
+preprocessing:
+  image_size: 512
+  xbd_original_size: 1024
+  split_ratios:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+
+# --- FloodNet Classes (10 classes) ---
+floodnet:
+  classes:
+    - Background
+    - Building-Flooded
+    - Building-Non-Flooded
+    - Road-Flooded
+    - Road-Non-Flooded
+    - Water
+    - Tree
+    - Vehicle
+    - Pool
+    - Grass
+  num_classes: 10
+
+# --- xBD / Building Damage Classes (5 classes) ---
+xbd:
+  classes:
+    - Background
+    - No-Damage
+    - Minor-Damage
+    - Major-Damage
+    - Destroyed
+  num_classes: 5
+  disaster_filter_keywords:
+    - flood
+    - hurricane
+
+# --- Training Hyperparameters ---
+training:
+  flood_segmentation:
+    batch_size: 8
+    learning_rate: 0.001
+    epochs: 50
+    smoke_test_epochs: 5
+    optimizer: adam
+    scheduler: cosine
+    loss: focal
+    encoder: resnet34
+    encoder_weights: imagenet
+
+  building_damage:
+    batch_size: 8
+    learning_rate: 0.001
+    epochs: 50
+    smoke_test_epochs: 5
+    optimizer: adam
+    scheduler: cosine
+    loss: weighted_ce
+    encoder: resnet34
+    encoder_weights: imagenet
+
+# --- Model Checkpoints ---
+models:
+  flood_segmentation: models/flood_seg_best.pt
+  building_damage: models/building_dmg_best.pt
+
+# --- Outputs ---
+outputs:
+  flood_seg_log: outputs/flood_seg_training_log.csv
+  building_dmg_log: outputs/building_dmg_training_log.csv
+  reports_dir: outputs/reports
+  demo_dir: outputs/demo
+
+# --- Agent Thresholds ---
+thresholds:
+  flood_severity:
+    severe_percent: 15.0      # (building-flooded + road-flooded) > this% = severe
+    partial_percent: 5.0      # > this% = partial, else none
+  road_access:
+    blocked_percent: 50.0     # > this% flooded roads = blocked
+    partial_percent: 10.0     # > this% = partial, else clear
+  coordinator:
+    ambiguity_margin: 5.0     # re-query if metric is within ±this% of a threshold
+
+# --- API Keys (use .env file for secrets, these are placeholders) ---
+api:
+  anthropic_api_key: ""       # Set via ANTHROPIC_API_KEY env var instead
+  model: claude-sonnet-4-6

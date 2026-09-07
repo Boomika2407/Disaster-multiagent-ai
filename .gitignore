@@ -1,0 +1,38 @@
+# Data directories (large files, not tracked)
+data/raw/
+data/processed/
+
+# Model checkpoints
+models/
+*.ckpt
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment & Secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Outputs (optional — uncomment to track demo outputs)
+# outputs/
