@@ -55,7 +55,7 @@ This project implements an **agentic multi-agent architecture** for disaster sce
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/disaster-multiagent-ai.git
+git clone https://github.com/Boomika2407/Disaster-multiagent-ai.git
 cd disaster-multiagent-ai
 
 # Create virtual environment
@@ -148,6 +148,6 @@ If you use this work, please cite:
 @misc{disaster-multiagent-ai,
   title={Multi-Agent Disaster Scene Understanding},
   year={2026},
-  url={https://github.com/<your-username>/disaster-multiagent-ai}
+  url={https://github.com/Boomika2407/Disaster-multiagent-ai}
 }
 ```
